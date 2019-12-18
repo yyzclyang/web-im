@@ -1,0 +1,47 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "react", "react-hooks"],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "semi": [2, "always"],
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
+    "object-curly-spacing": ["error", "always"],
+    "no-extra-parens": "error",
+    "max-len": ["warn", { "code": 120 }],
+    "no-multi-spaces": "warn",
+    "no-duplicate-imports": "warn",
+    "default-case": "error",
+    "eqeqeq": "error",
+    "no-empty-function": "error",
+    "no-eval": "error",
+    "radix": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "require-await": "warn",
+    "comma-dangle": ["error", "never"],
+    "no-var": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
