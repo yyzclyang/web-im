@@ -1,0 +1,22 @@
+@import "../../../../style/theme";
+
+.sign {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #ececec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & .sign-in,
+  & .sign-up {
+    padding: 32px;
+    background: #ffffff;
+    border: {
+      radius: 4px;
+    }
+  }
+}
