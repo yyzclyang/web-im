@@ -1,0 +1,18 @@
+@import "../../style/theme";
+
+.sign-up {
+  &-title {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1;
+    margin-bottom: 32px;
+  }
+  &-form {
+    width: 400px;
+  }
+  &-form-button {
+    margin-right: 16px;
+  }
+}
