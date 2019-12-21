@@ -16,7 +16,8 @@
     "rootDir": ".",
     "outDir": "dist",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "*": ["types/*"]
     },
     "types": ["react"]
   },
