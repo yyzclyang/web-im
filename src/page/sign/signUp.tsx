@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { Form, Input, Tooltip, Icon, Checkbox, Button } from "antd";
-import { FormComponentProps } from "antd/es/form";
-import { classNames, scopedClassMaker } from "@/utils";
-import Sign from "./components/sign";
-import "./signUp.scss";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Form, Input, Tooltip, Icon, Checkbox, Button, message } from "antd";
+import { FormComponentProps } from "antd/es/form";
+import {
+  classNames,
+  safeData,
+  scopedClassMaker,
+  useShallowEqualSelector
+} from "@/utils";
+import Sign from "./components/sign";
+import { SignUpData } from "@/config/WebIM";
+import { signUpAction } from "@/store/action";
+import { StoreType } from "@/store";
+import "./signUp.scss";
 
 const sc = scopedClassMaker("sign-up");
 
@@ -14,6 +23,10 @@ interface SignUpProps extends FormComponentProps<string> {
 
 const SignUp: React.FC<SignUpProps> = (props: SignUpProps) => {
   const { form } = props;
+  const signUpState = useShallowEqualSelector(
+    (store: StoreType) => store.sign.signUpState
+  );
+  const dispatch = useDispatch();
   const [confirmDirty, setConfirmDirty] = useState<boolean>(false);
 
   const formItemLayout = {
@@ -44,6 +57,20 @@ const SignUp: React.FC<SignUpProps> = (props: SignUpProps) => {
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
+        signUpAction((values as unknown) as SignUpData)(dispatch)
+          .then()
+          .catch((e) => {
+            const errorMSGList: { [key: string]: string } = {
+              duplicate_unique_property_exists: "用户已存在！",
+              illegal_argument: "用户名不合法！",
+              unauthorized: "注册失败，无权限！",
+              resource_limited: "您的App用户注册数量已达上限,请升级至企业版！"
+            };
+            const errorMSG = safeData(
+              () => errorMSGList[JSON.parse(e.data).error]
+            );
+            message.error(errorMSG);
+          });
       }
     });
   };
@@ -71,7 +98,7 @@ const SignUp: React.FC<SignUpProps> = (props: SignUpProps) => {
   return (
     <Sign>
       <div className={classNames(sc())}>
-        <span className={sc("title")}>Welcome Web IM</span>
+        <span className={sc("title")}>Welcome to Web IM</span>
         <Form
           {...formItemLayout}
           onSubmit={handleSubmit}
