@@ -1,5 +1,4 @@
 import { Dispatch } from "redux";
-import { ThunkAction } from "redux-thunk";
 import WebIM, {
   SignUpData,
   SignUpSuccessResult,
@@ -10,24 +9,25 @@ interface SignActionTypeList {
   CHANGE_SIGN_IN_STATE: number;
   CHANGE_SIGN_UP_STATE: number;
 }
-
 interface SignAction<K extends keyof SignActionTypeList> {
   type: K;
   payload: {
     state: SignActionTypeList[K];
   };
 }
-// 注册状态： 0 未操作，1 注册中，2 注册成功，-1 注册失败
-const changeSignUpState = (
-  state: number
-): SignAction<"CHANGE_SIGN_UP_STATE"> => {
-  return {
-    type: "CHANGE_SIGN_UP_STATE",
+const changeStateActionGenerator = <T extends keyof SignActionTypeList>(
+  type: T
+): ((state: SignActionTypeList[T]) => SignAction<T>) => {
+  return (state) => ({
+    type,
     payload: {
       state
     }
-  };
+  });
 };
+
+// 注册状态： 0 未操作，1 注册中，2 注册成功，-1 注册失败
+const changeSignUpState = changeStateActionGenerator("CHANGE_SIGN_UP_STATE");
 
 const signUpAction = ({
   username,
@@ -61,16 +61,8 @@ const signUpAction = ({
   };
 };
 
-const changeSignInState = (
-  state: number
-): SignAction<"CHANGE_SIGN_IN_STATE"> => {
-  return {
-    type: "CHANGE_SIGN_IN_STATE",
-    payload: {
-      state
-    }
-  };
-};
+// 登录状态： 0 未操作，1 登录中，2 登录成功，-1 登录失败
+const changeSignInState = changeStateActionGenerator("CHANGE_SIGN_IN_STATE");
 
 export {
   SignActionTypeList,
