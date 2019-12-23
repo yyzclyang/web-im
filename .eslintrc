@@ -26,6 +26,7 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     "indent": ["warn", 2, { "SwitchCase": 1, "MemberExpression": "off" }],
+    "@typescript-eslint/camelcase": ["warn", { "properties": "never" }],
     "object-curly-spacing": ["error", "always"],
     "no-multi-spaces": "warn",
     "no-duplicate-imports": "warn",
