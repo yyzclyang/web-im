@@ -8,7 +8,7 @@ module.exports = merge(baseConfig, {
     new HtmlWebpackPlugin({
       title: "web-im",
       template: "./src/index.html",
-      favicon: "./src/favicon.png",
+      favicon: "./src/favicon.ico",
       hash: true, //防止缓存
       minify: {
         removeComments: true, //删除Html注释

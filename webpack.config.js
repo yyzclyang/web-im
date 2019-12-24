@@ -79,7 +79,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "web-im",
       template: "./src/index.html",
-      favicon: "./src/favicon.png"
+      favicon: "./src/favicon.ico"
     }),
     new MiniCssExtractPlugin({
       filename: "index.bundle.[hash].css"
