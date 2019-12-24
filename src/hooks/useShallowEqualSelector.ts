@@ -1,7 +1,9 @@
 import { useSelector, shallowEqual } from "react-redux";
 
-export default function useShallowEqualSelector<TState, TSelected>(
+const useShallowEqualSelector = <TState, TSelected>(
   selector: (state: TState) => TSelected
-): TSelected {
+): TSelected => {
   return useSelector(selector, shallowEqual);
-}
+};
+
+export default useShallowEqualSelector;

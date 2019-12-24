@@ -3,12 +3,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Input, Tooltip, Icon, Checkbox, Button, message } from "antd";
 import { FormComponentProps } from "antd/es/form";
-import {
-  classNames,
-  safeData,
-  scopedClassMaker,
-  useShallowEqualSelector
-} from "@/utils";
+import { classNames, safeData, scopedClassMaker } from "@/utils";
+import { useShallowEqualSelector } from "@/hooks";
 import Sign from "./components/sign";
 import { SignUpData } from "@/config/WebIM";
 import { signUpAction } from "@/store/action";
