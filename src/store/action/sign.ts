@@ -4,6 +4,7 @@ import WebIM, {
   SignUpSuccessResult,
   SignUpErrorResult
 } from "@/config/WebIM";
+import { hideLoading, showLoading } from "./loading";
 
 interface SignActionTypeList {
   CHANGE_SIGN_IN_STATE: number;
@@ -39,17 +40,20 @@ const signUpAction = ({
   return (dispatch: Dispatch) => {
     return new Promise((resolve, reject) => {
       const onSuccess = (result: SignUpSuccessResult) => {
-        successFn && successFn(result);
         dispatch(changeSignUpState(2));
+        dispatch(hideLoading());
+        successFn && successFn(result);
         resolve(result);
       };
       const onError = (error: SignUpErrorResult) => {
         dispatch(changeSignUpState(-1));
+        dispatch(hideLoading());
         errorFn && errorFn(error);
         reject(error);
       };
 
       dispatch(changeSignUpState(1));
+      dispatch(showLoading());
       WebIM.signUp({
         username,
         password,
