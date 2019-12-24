@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Input, Tooltip, Icon, Checkbox, Button, message } from "antd";
 import { FormComponentProps } from "antd/es/form";
 import { classNames, safeData, scopedClassMaker } from "@/utils";
-import { useShallowEqualSelector } from "@/hooks";
 import Sign from "./components/sign";
 import { SignUpData } from "@/config/WebIM";
 import { signUpAction } from "@/store/action";
-import { StoreType } from "@/store";
 import "./signUp.scss";
 
 const sc = scopedClassMaker("sign-up");
@@ -19,10 +17,8 @@ interface SignUpProps extends FormComponentProps<string> {
 
 const SignUp: React.FC<SignUpProps> = (props: SignUpProps) => {
   const { form } = props;
-  const signUpState = useShallowEqualSelector(
-    (store: StoreType) => store.sign.signUpState
-  );
   const dispatch = useDispatch();
+  const history = useHistory();
   const [confirmDirty, setConfirmDirty] = useState<boolean>(false);
 
   const formItemLayout = {
@@ -54,7 +50,14 @@ const SignUp: React.FC<SignUpProps> = (props: SignUpProps) => {
       if (!err) {
         console.log("Received values of form: ", values);
         signUpAction((values as unknown) as SignUpData)(dispatch)
-          .then()
+          .then(() => {
+            message.success("注册成功", 1).then(
+              () => {
+                history.push("/signIn");
+              },
+              () => null
+            );
+          })
           .catch((e) => {
             const errorMSGList: { [key: string]: string } = {
               duplicate_unique_property_exists: "用户已存在！",
