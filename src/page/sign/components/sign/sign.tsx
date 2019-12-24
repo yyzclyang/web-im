@@ -1,6 +1,7 @@
 import React from "react";
 import { classNames, scopedClassMaker } from "@/utils";
 import "./sign.scss";
+import "@/asset/images/logo.svg";
 
 const sc = scopedClassMaker("sign");
 
@@ -9,7 +10,14 @@ interface SignProps {
 }
 
 const Sign: React.FC<SignProps> = (props: SignProps) => {
-  return <div className={classNames(sc())}>{props.children}</div>;
+  return (
+    <div className={classNames(sc())}>
+      <svg className={classNames(sc("page-logo"))}>
+        <use xlinkHref={`#logo`} />
+      </svg>
+      {props.children}
+    </div>
+  );
 };
 
 export default Sign;

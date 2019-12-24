@@ -8,9 +8,15 @@
   bottom: 0;
   background: #ececec;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
+  & .sign-page-logo {
+    width: 4em;
+    height: 4em;
+    margin-bottom: 32px;
+  }
   & .sign-in,
   & .sign-up {
     padding: 32px;
