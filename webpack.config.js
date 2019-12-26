@@ -2,14 +2,17 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+const isDev = () => process.env.NODE_ENV !== "production";
+
 module.exports = {
   entry: {
     index: "./src/index.tsx"
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].bundle.[hash].js",
-    publicPath: "/"
+    filename: "static/js/[name].[hash].js",
+    chunkFilename: "static/chunks/[name].[hash].js"
+    // publicPath: "/"
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
@@ -27,13 +30,12 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: "awesome-typescript-loader"
+        use: ["babel-loader", "awesome-typescript-loader"]
       },
       {
         test: /\.s?css$/,
         use: [
-          "style-loader",
-          MiniCssExtractPlugin.loader,
+          isDev() ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader"
@@ -48,9 +50,9 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/images",
-          name: "[name].[hash].[ext]",
-          publicPath: "./asset/images"
+          outputPath: "./static/assets/images",
+          name: "[name].[hash].[ext]"
+          // publicPath: "./static/assets/images"
         }
       },
       {
@@ -58,9 +60,9 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/media",
-          name: "[name].[hash].[ext]",
-          publicPath: "./asset/media"
+          outputPath: "./static/assets/media",
+          name: "[name].[hash].[ext]"
+          // publicPath: "./static/assets/media"
         }
       },
       {
@@ -68,9 +70,9 @@ module.exports = {
         loader: "url-loader",
         options: {
           limit: 8192,
-          outputPath: "./asset/fonts",
-          name: "[name].[hash].[ext]",
-          publicPath: "./asset/fonts"
+          outputPath: "./static/assets/fonts",
+          name: "[name].[hash].[ext]"
+          // publicPath: "./static/assets/fonts"
         }
       }
     ]
@@ -80,9 +82,6 @@ module.exports = {
       title: "web-im",
       template: "./src/index.html",
       favicon: "./src/favicon.ico"
-    }),
-    new MiniCssExtractPlugin({
-      filename: "index.bundle.[hash].css"
     })
   ]
 };
