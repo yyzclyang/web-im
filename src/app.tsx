@@ -10,7 +10,7 @@ const App: React.FunctionComponent = ({}) => {
   return (
     <div className={classNames(sc("container"))}>
       <Router>
-        <Route exact path="/" component={SignUp} />
+        <Route exact path="/" component={SignIn} />
         <Route path="/signUp" component={SignUp} />
         <Route path="/signIn" component={SignIn} />
       </Router>

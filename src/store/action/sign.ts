@@ -2,7 +2,9 @@ import { Dispatch } from "redux";
 import WebIM, {
   SignUpData,
   SignUpSuccessResult,
-  SignUpErrorResult
+  SignUpErrorResult,
+  SignInData,
+  SignInSuccessResult
 } from "@/config/WebIM";
 import { hideLoading, showLoading } from "./loading";
 
@@ -68,10 +70,44 @@ const signUpAction = ({
 // 登录状态： 0 未操作，1 登录中，2 登录成功，-1 登录失败
 const changeSignInState = changeStateActionGenerator("CHANGE_SIGN_IN_STATE");
 
+const signInAction = ({
+  username,
+  password,
+  successFn,
+  errorFn
+}: SignInData) => {
+  return (dispatch: Dispatch) => {
+    return new Promise((resolve, reject) => {
+      const onSuccess = (result: SignInSuccessResult) => {
+        dispatch(changeSignUpState(2));
+        dispatch(hideLoading());
+        successFn && successFn(result);
+        resolve(result);
+      };
+      const onError = () => {
+        dispatch(changeSignUpState(-1));
+        dispatch(hideLoading());
+        errorFn && errorFn();
+        reject();
+      };
+
+      dispatch(changeSignUpState(1));
+      dispatch(showLoading());
+      WebIM.signInWithPassword({
+        username,
+        password,
+        successFn: onSuccess,
+        errorFn: onError
+      });
+    });
+  };
+};
+
 export {
   SignActionTypeList,
   SignAction,
   signUpAction,
   changeSignUpState,
+  signInAction,
   changeSignInState
 };

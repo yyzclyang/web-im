@@ -1,9 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Form, Icon, Input, Button } from "antd";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Form, Icon, Input, Button, message } from "antd";
 import { FormComponentProps } from "antd/es/form";
 import { classNames, scopedClassMaker } from "@/utils";
 import Sign from "./components/sign";
+import { signInAction } from "@/store/action";
+import { SignInData } from "@/config/WebIM";
 import "./signIn.scss";
 
 const sc = scopedClassMaker("sign-in");
@@ -17,11 +20,26 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
     form: { validateFields, getFieldDecorator }
   } = props;
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
+        signInAction((values as unknown) as SignInData)(dispatch)
+          .then(() => {
+            message.success("登录成功", 0.5).then(
+              () => {
+                history.push("/chat");
+              },
+              () => null
+            );
+          })
+          .catch((e) => {
+            console.log("error");
+          });
       }
     });
   };
