@@ -1,0 +1,25 @@
+@import "../../../../style/theme";
+
+.chat-slide-bar {
+  width: 80px;
+  height: 100%;
+  background: #504e4f;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 48px;
+  padding-bottom: 32px;
+
+  &-avatar {
+    background: $theme-color;
+  }
+  &-icon {
+    font-size: 30px;
+    color: #bdbdbd;
+    margin-top: 32px;
+    &-placeholder {
+      flex-grow: 1;
+    }
+  }
+}
