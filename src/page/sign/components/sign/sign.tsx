@@ -1,7 +1,7 @@
 import React from "react";
 import { classNames, scopedClassMaker } from "@/utils";
 import "./sign.scss";
-import "@/asset/images/logo.svg";
+import "@/assets/images/logo.svg";
 
 const sc = scopedClassMaker("sign");
 
