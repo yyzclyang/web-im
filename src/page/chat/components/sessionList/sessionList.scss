@@ -1,0 +1,11 @@
+@import "../../../../style/theme";
+
+.session-list {
+  width: 320px;
+  border-right: 1px solid #eeeeee;
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+}
