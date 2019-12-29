@@ -1,0 +1,17 @@
+@import "../../../../style/theme";
+
+.chat-panel {
+  flex-grow: 1;
+
+  &-inactive {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-icon {
+      font-size: 72px;
+      color: #f2f2f2;
+    }
+  }
+}
