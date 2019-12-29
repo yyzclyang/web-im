@@ -5,7 +5,7 @@ import { Form, Icon, Input, Button, message } from "antd";
 import { FormComponentProps } from "antd/es/form";
 import { classNames, scopedClassMaker } from "@/utils";
 import Sign from "./components/sign";
-import { signInAction } from "@/store/action";
+import { changeUserInfo, signInAction } from "@/store/action";
 import { SignInData, SignInSuccessResult } from "@/config/WebIM";
 import { tokenUtil } from "@/utils/index";
 import "./signIn.scss";
@@ -32,6 +32,7 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
         signInAction((values as unknown) as SignInData)(dispatch)
           .then((res: SignInSuccessResult) => {
             tokenUtil.setToken(res.access_token);
+            dispatch(changeUserInfo(res.user));
             message.success("登录成功", 0.5).then(
               () => {
                 history.push("/chat");
