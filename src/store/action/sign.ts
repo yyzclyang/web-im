@@ -79,19 +79,19 @@ const signInAction = ({
   return (dispatch: Dispatch): Promise<SignInSuccessResult> => {
     return new Promise((resolve, reject) => {
       const onSuccess = (result: SignInSuccessResult) => {
-        dispatch(changeSignUpState(2));
+        dispatch(changeSignInState(2));
         dispatch(hideLoading());
         successFn && successFn(result);
         resolve(result);
       };
       const onError = () => {
-        dispatch(changeSignUpState(-1));
+        dispatch(changeSignInState(-1));
         dispatch(hideLoading());
         errorFn && errorFn();
         reject();
       };
 
-      dispatch(changeSignUpState(1));
+      dispatch(changeSignInState(1));
       dispatch(showLoading());
       WebIM.signInWithPassword({
         username,
