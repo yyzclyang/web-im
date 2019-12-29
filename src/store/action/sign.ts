@@ -39,7 +39,7 @@ const signUpAction = ({
   successFn,
   errorFn
 }: SignUpData) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch): Promise<SignUpSuccessResult> => {
     return new Promise((resolve, reject) => {
       const onSuccess = (result: SignUpSuccessResult) => {
         dispatch(changeSignUpState(2));
@@ -76,7 +76,7 @@ const signInAction = ({
   successFn,
   errorFn
 }: SignInData) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch): Promise<SignInSuccessResult> => {
     return new Promise((resolve, reject) => {
       const onSuccess = (result: SignInSuccessResult) => {
         dispatch(changeSignUpState(2));

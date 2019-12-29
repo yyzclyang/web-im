@@ -6,7 +6,8 @@ import { FormComponentProps } from "antd/es/form";
 import { classNames, scopedClassMaker } from "@/utils";
 import Sign from "./components/sign";
 import { signInAction } from "@/store/action";
-import { SignInData } from "@/config/WebIM";
+import { SignInData, SignInSuccessResult } from "@/config/WebIM";
+import { tokenUtil } from "@/utils/index";
 import "./signIn.scss";
 
 const sc = scopedClassMaker("sign-in");
@@ -29,7 +30,8 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
       if (!err) {
         console.log("Received values of form: ", values);
         signInAction((values as unknown) as SignInData)(dispatch)
-          .then(() => {
+          .then((res: SignInSuccessResult) => {
+            tokenUtil.setToken(res.access_token);
             message.success("登录成功", 0.5).then(
               () => {
                 history.push("/chat");
