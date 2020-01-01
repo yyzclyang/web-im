@@ -7,6 +7,9 @@ declare class connection {
   open: (options: { [key: string]: any }) => void;
   close: () => void;
   getRoster: (options: { [key: string]: any }) => void;
+  subscribe: (options: { to: string; nick?: string; message?: string }) => {};
+  subscribed: (options: { to: string; message?: string }) => void;
+  unsubscribed: (options: { to: string; message?: string }) => void;
 }
 
 declare const websdk: {

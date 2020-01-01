@@ -1,14 +1,18 @@
 import websdk from "easemob-websdk";
 import webImConfig from "./WebIMConfig";
+import {
+  addFriendStatusMessage,
+  friendRequest
+} from "@/page/chat/components/modal/addFriend";
 
-interface SignUpData {
+export interface SignUpData {
   username: string;
   password: string;
   nickname: string;
   successFn?: Function;
   errorFn?: Function;
 }
-interface SignUpUserData {
+export interface SignUpUserData {
   activated: boolean;
   created: number;
   modified: number;
@@ -17,7 +21,7 @@ interface SignUpUserData {
   username: string;
   uuid: string;
 }
-interface SignUpSuccessResult {
+export interface SignUpSuccessResult {
   action: string;
   application: string;
   applicationName: string;
@@ -28,18 +32,18 @@ interface SignUpSuccessResult {
   timestamp: number;
   uri: string;
 }
-interface SignUpErrorResult {
+export interface SignUpErrorResult {
   data: string;
   type: number;
 }
 
-interface SignInData {
+export interface SignInData {
   username: string;
   password: string;
   successFn?: Function;
   errorFn?: Function;
 }
-interface SignInSuccessResult {
+export interface SignInSuccessResult {
   access_token: string;
   expires_in: number;
   user: {
@@ -52,8 +56,8 @@ interface SignInSuccessResult {
   };
 }
 
-type FriendSubscription = "both" | "to" | "from";
-interface FriendData {
+export type FriendSubscription = "both" | "to" | "from";
+export interface FriendData {
   name: string;
   subscription: FriendSubscription;
   jid: {
@@ -63,7 +67,14 @@ interface FriendData {
     clientResource: string;
   };
 }
-type GetFriendResult = Array<FriendData>;
+export type GetFriendResult = Array<FriendData>;
+export type PresenceMessageType = "subscribe" | "subscribed";
+export interface PresenceMessage<T> {
+  type: T;
+  to: string;
+  from: string;
+  status: string;
+}
 
 const WebIM = {
   config: webImConfig,
@@ -142,6 +153,15 @@ const WebIM = {
       });
     });
   },
+  addFriend: (user: string) => {
+    return WebIM.conn.subscribe({ to: user, message: "加个好友呗!" });
+  },
+  acceptFriendRequest: (user: string) => {
+    return WebIM.conn.subscribed({ to: user, message: "[resp:true]" });
+  },
+  declineFriendRequest: (user: string) => {
+    return WebIM.conn.unsubscribed({ to: user, message: "rejectAddFriend" });
+  },
   listen: () => {
     WebIM.conn.listen({
       onOpened: (message: any) => {
@@ -187,8 +207,22 @@ const WebIM = {
         //收到视频消息
         console.log("onVideoMessage", message);
       },
-      onPresence: (message: any) => {
+      onPresence: (message: PresenceMessage<PresenceMessageType>) => {
         //处理“广播”或“发布-订阅”消息，如联系人订阅请求、处理群组、聊天室被踢解散等消息
+        switch (message.type) {
+          case "subscribe":
+            {
+              friendRequest(message as PresenceMessage<"subscribe">);
+            }
+            break;
+          case "subscribed":
+            {
+              addFriendStatusMessage(message as PresenceMessage<"subscribed">);
+            }
+            break;
+          default: {
+          }
+        }
         console.log("onPresence", message);
       },
       onRoster: (message: any) => {
@@ -245,12 +279,3 @@ const WebIM = {
 };
 
 export default WebIM;
-export {
-  SignUpData,
-  SignUpSuccessResult,
-  SignUpErrorResult,
-  SignInData,
-  SignInSuccessResult,
-  FriendData,
-  GetFriendResult
-};
