@@ -1,14 +1,11 @@
 import React from "react";
 import { classNames, scopedClassMaker } from "@/utils";
 import "./sessionItem.scss";
+import { FriendData } from "@/config/WebIM";
 
 const sc = scopedClassMaker("session-item");
 
-interface SessionItemProps {
-  jid: string;
-  name: string;
-  subscription: "both" | "to" | "from";
-}
+type SessionItemProps = FriendData;
 
 const SessionItem: React.FC<SessionItemProps> = (props: SessionItemProps) => {
   const { name } = props;
