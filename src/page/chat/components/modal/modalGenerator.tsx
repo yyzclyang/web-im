@@ -1,13 +1,15 @@
 import React from "react";
 import { Modal } from "antd";
-import { ModalProps } from "antd/lib/modal/Modal";
-import AddFriendModalCom from "./addFriend";
+import { classNames, scopedClassMaker } from "@/utils";
+import AddFriend from "./addFriend";
+
+const sc = scopedClassMaker("chat-modal");
 
 type AddModalType = "add-friend" | "join-group" | "create-group";
 type SettingModalType = "setting";
 type ModalType = AddModalType | SettingModalType;
 
-interface Options extends ModalProps {
+interface Options {
   type: ModalType;
   visible: boolean;
   onClose: (type: Options["type"]) => void;
@@ -15,17 +17,28 @@ interface Options extends ModalProps {
 
 const modalGenerator = (options: Options) => {
   const { type, visible, onClose } = options;
-  const com = (
-    <AddFriendModalCom
-      onClick={() => {
-        onClose(type);
-      }}
-    />
-  );
+
+  const closeModal = () => {
+    onClose(type);
+  };
+  const modalCom: { [type in ModalType]: React.ReactNode } = {
+    "add-friend": <AddFriend onClick={closeModal} />,
+    "join-group": <AddFriend onClick={closeModal} />,
+    "create-group": <AddFriend onClick={closeModal} />,
+    setting: <AddFriend onClick={closeModal} />
+  };
 
   return (
-    <Modal key={type} visible={visible}>
-      {com}
+    <Modal
+      className={classNames(sc())}
+      width={480}
+      key={type}
+      visible={visible}
+      footer={null}
+      title="添加好友"
+      onCancel={closeModal}
+    >
+      {modalCom[type]}
     </Modal>
   );
 };

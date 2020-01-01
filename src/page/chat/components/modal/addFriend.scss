@@ -1,0 +1,9 @@
+@import "../../../../style/theme";
+
+.modal-add-friend {
+  display: flex;
+
+  &-button {
+    margin-left: 4px;
+  }
+}
