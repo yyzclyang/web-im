@@ -67,7 +67,7 @@ export interface FriendData {
     clientResource: string;
   };
 }
-export type GetFriendResult = Array<FriendData>;
+export type FriendResult = Array<FriendData>;
 export type PresenceMessageType = "subscribe" | "subscribed";
 export interface PresenceMessage<T> {
   type: T;
@@ -141,10 +141,10 @@ const WebIM = {
   quit: () => {
     return WebIM.conn.close();
   },
-  getFriend: (): Promise<GetFriendResult> => {
+  getFriend: (): Promise<FriendResult> => {
     return new Promise((resolve, reject) => {
       WebIM.conn.getRoster({
-        success: (result: GetFriendResult) => {
+        success: (result: FriendResult) => {
           resolve(result);
         },
         error: (error: any) => {

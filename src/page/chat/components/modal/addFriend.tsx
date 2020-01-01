@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Input, Button, message, Modal } from "antd";
 import WebIM, { PresenceMessage } from "@/config/WebIM";
 import { classNames, scopedClassMaker } from "@/utils";
+import store from "@/store";
+import { changeFriendsList } from "@/store/action";
 import "./addFriend.scss";
 
 const sc = scopedClassMaker("modal-add-friend");
@@ -67,6 +69,9 @@ const friendRequest = (message: PresenceMessage<"subscribe">) => {
   });
 };
 const addFriendStatusMessage = (message: PresenceMessage<"subscribed">) => {
+  WebIM.getFriend().then((result) => {
+    store.dispatch(changeFriendsList(result));
+  });
   Modal.info({
     icon: null,
     title: "好友添加消息",
