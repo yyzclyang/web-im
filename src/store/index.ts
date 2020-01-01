@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, Middleware } from "redux";
-import reducers, { StoreType } from "@/store/reducer";
+import reducers, { StoreType } from "./reducer";
 
 const middleware: Middleware[] = [];
 
