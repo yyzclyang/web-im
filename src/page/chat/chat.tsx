@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useShallowEqualSelector } from "@/hooks";
 import { StoreType } from "@/store";
 import { classNames, scopedClassMaker } from "@/utils";
@@ -11,7 +12,11 @@ import { getFriendsListAction } from "@/store/action";
 
 const sc = scopedClassMaker("chat");
 
+export type ChatType = "single" | "group";
+
 const Chat: React.FC = () => {
+  const { chatType = "single" } = useParams();
+
   const friendsList = useShallowEqualSelector(
     (store: StoreType) => store.friends
   ).filter((friendData) => friendData.subscription === "both");
@@ -23,8 +28,8 @@ const Chat: React.FC = () => {
 
   return (
     <div className={classNames(sc("page"))}>
-      <SlideBar />
-      <SessionList friendList={friendsList} />
+      <SlideBar chatType={chatType as ChatType} />
+      <SessionList chatType={chatType as ChatType} friendList={friendsList} />
       <ChatPanel active={false} />
     </div>
   );

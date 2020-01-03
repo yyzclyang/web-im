@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Avatar, Icon, Dropdown, Modal } from "antd";
+import { NavLink } from "react-router-dom";
+import { Avatar, Icon, Dropdown } from "antd";
 import { ClickParam } from "antd/lib/menu";
 import { classNames, scopedClassMaker } from "@/utils";
 import PopMenu from "../popMenu";
@@ -8,6 +9,7 @@ import modalGenerator, {
   SettingModalType,
   ModalType
 } from "../modal";
+import { ChatType } from "../../chat";
 
 import "./slideBar.scss";
 
@@ -27,7 +29,13 @@ interface SettingMenuItem {
   title: string;
 }
 
-const SlideBar: React.FC = () => {
+interface SlideBarProps {
+  chatType: ChatType;
+}
+
+const SlideBar: React.FC<SlideBarProps> = (props: SlideBarProps) => {
+  const { chatType } = props;
+
   const modalType: Array<ModalType> = [
     "add-friend",
     "join-group",
@@ -77,8 +85,13 @@ const SlideBar: React.FC = () => {
         size="large"
         shape="square"
       />
-      <Icon className={classNames(sc("icon"))} type="user" />
-      <Icon className={classNames(sc("icon"))} type="team" />
+      <NavLink to="/chat/single" replace className={classNames(sc("link"))}>
+        <Icon className={classNames(sc("icon"))} type="user" />
+      </NavLink>
+      <NavLink to="/chat/group" replace className={classNames(sc("link"))}>
+        <Icon className={classNames(sc("icon"))} type="team" />
+      </NavLink>
+
       <div className={sc("icon-placeholder")} />
       <Dropdown
         overlay={
