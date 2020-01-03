@@ -33,14 +33,10 @@ const SignIn: React.FC<SignInProps> = (props: SignInProps) => {
           .then((res: SignInSuccessResult) => {
             tokenUtil.setToken(res.access_token);
             dispatch(changeUserInfo(res.user));
-            message.success("登录成功", 0.5).then(
-              () => {
-                history.push("/chat");
-              },
-              () => null
-            );
+            history.push("/chat/single");
+            message.success("登录成功", 0.5);
           })
-          .catch((e) => {
+          .catch(() => {
             console.log("error");
           });
       }
