@@ -3,15 +3,17 @@ import SessionItem from "../sessionItem";
 import { FriendData } from "@/config/WebIM";
 import { classNames, scopedClassMaker } from "@/utils";
 import "./sessionList.scss";
+import { ChatType } from "../../chat";
 
 const sc = scopedClassMaker("session-list");
 
 interface SessionListProps {
+  chatType: ChatType;
   friendList: Array<FriendData>;
 }
 
 const SessionList: React.FC<SessionListProps> = (props: SessionListProps) => {
-  const { friendList } = props;
+  const { chatType, friendList } = props;
 
   return (
     <div className={classNames(sc())}>
@@ -19,7 +21,7 @@ const SessionList: React.FC<SessionListProps> = (props: SessionListProps) => {
         <ul>
           {friendList.map((friendInfo) => (
             <li key={friendInfo.name}>
-              <SessionItem {...friendInfo} />
+              <SessionItem chatType={chatType} friendInfo={friendInfo} />
             </li>
           ))}
         </ul>
