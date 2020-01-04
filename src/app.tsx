@@ -21,8 +21,7 @@ const App: React.FunctionComponent = ({}) => {
       <Route exact path="/" component={SignIn} />
       <Route path="/signUp" component={SignUp} />
       <Route path="/signIn" component={SignIn} />
-      <Route exact path="/chat" component={Chat} />
-      <Route path="/chat/:chatType/:chatId" component={Chat} />
+      <Route exact path="/chat/:chatType?/:chatId?" component={Chat} />
     </div>
   );
 };

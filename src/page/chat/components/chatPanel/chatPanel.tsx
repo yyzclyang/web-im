@@ -41,7 +41,9 @@ const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
             <span className={classNames(sc("name"))}>{friendInfo?.name}</span>
           </div>
           <div className={classNames(sc("message-list"))}>
-            {JSON.stringify(messageList)}
+            {messageList.map((message) => (
+              <div key={message.time}>{message.message}</div>
+            ))}
           </div>
           <div className={classNames(sc("input-area"))}>
             <TextArea

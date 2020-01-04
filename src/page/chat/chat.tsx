@@ -39,7 +39,7 @@ const Chat: React.FC = () => {
       />
       <ChatPanel
         chatId={chatId}
-        messageList={messageList[chatId!]}
+        messageList={messageList[chatId!] ?? []}
         friendInfo={friendsList.find(
           (friendInfo) => friendInfo.name === chatId
         )}
