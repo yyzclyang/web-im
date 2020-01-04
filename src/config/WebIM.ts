@@ -160,7 +160,37 @@ const WebIM = {
     return WebIM.conn.subscribed({ to: user, message: "[resp:true]" });
   },
   declineFriendRequest: (user: string) => {
-    return WebIM.conn.unsubscribed({ to: user, message: "rejectAddFriend" });
+    return WebIM.conn.unsubscribed({
+      to: user,
+      message: "rejectAddFriend"
+    });
+  },
+  sendSingleMessage: (
+    id: number,
+    to: string,
+    message: string
+  ): Promise<{ id: string; serverMsgId: string }> => {
+    return new Promise((resolve, reject) => {
+      // const id = WebIM.conn.getUniqueId(); // 生成本地消息id
+      // @ts-ignore
+      const msg = new websdk.message("txt", id); // 创建文本消息
+      console.log("msg", msg);
+      msg.set({
+        msg: message, // 消息内容
+        to: to, // 接收消息对象（用户id）
+        roomType: false,
+        ext: {}, //扩展消息
+        success: (id: string, serverMsgId: string) => {
+          // 对成功的相关定义，sdk会将消息id登记到日志进行备份处理
+          resolve({ id, serverMsgId });
+        },
+        fail: () => {
+          // 对失败的相关定义，sdk会将消息id登记到日志进行备份处理
+          reject();
+        }
+      });
+      WebIM.conn.send(msg.body);
+    });
   },
   listen: () => {
     WebIM.conn.listen({
