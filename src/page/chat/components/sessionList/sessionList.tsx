@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import SessionItem from "../sessionItem";
 import { FriendData } from "@/config/WebIM";
 import { classNames, scopedClassMaker } from "@/utils";
@@ -9,6 +10,7 @@ const sc = scopedClassMaker("session-list");
 
 interface SessionListProps {
   chatType: ChatType;
+  chatId?: string;
   friendList: Array<FriendData>;
 }
 
@@ -21,7 +23,13 @@ const SessionList: React.FC<SessionListProps> = (props: SessionListProps) => {
         <ul>
           {friendList.map((friendInfo) => (
             <li key={friendInfo.name}>
-              <SessionItem chatType={chatType} friendInfo={friendInfo} />
+              <NavLink
+                to={`/chat/${chatType}/${friendInfo.name}`}
+                replace
+                className={classNames(sc("link"))}
+              >
+                <SessionItem friendInfo={friendInfo} />
+              </NavLink>
             </li>
           ))}
         </ul>

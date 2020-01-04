@@ -18,14 +18,8 @@
     }
   }
   &:hover {
-    //cursor: pointer;
     .session-item-name {
       color: #40a9ff;
-    }
-  }
-  &.active {
-    .session-item-name {
-      color: $theme-color;
     }
   }
 }

@@ -29,13 +29,7 @@ interface SettingMenuItem {
   title: string;
 }
 
-interface SlideBarProps {
-  chatType: ChatType;
-}
-
-const SlideBar: React.FC<SlideBarProps> = (props: SlideBarProps) => {
-  const { chatType } = props;
-
+const SlideBar: React.FC = () => {
   const modalType: Array<ModalType> = [
     "add-friend",
     "join-group",
