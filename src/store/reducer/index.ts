@@ -3,12 +3,14 @@ import signReducer, { SignStateType } from "./sign";
 import loadingReducer, { LoadingStateType } from "./loading";
 import userReducer, { UserType } from "./user";
 import friendsListReducer, { FriendsListType } from "./friends";
+import messageListReducer, { MessageListType } from "./message";
 
 const reducers = combineReducers({
   sign: signReducer,
   loading: loadingReducer,
   user: userReducer,
-  friends: friendsListReducer
+  friends: friendsListReducer,
+  messages: messageListReducer
 });
 
 interface StoreType {
@@ -16,6 +18,7 @@ interface StoreType {
   loading: LoadingStateType;
   user: UserType;
   friends: FriendsListType;
+  messages: MessageListType;
 }
 
 export default reducers;
