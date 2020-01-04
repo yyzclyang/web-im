@@ -79,10 +79,10 @@ const SlideBar: React.FC = () => {
         size="large"
         shape="square"
       />
-      <NavLink to="/chat/single" replace className={classNames(sc("link"))}>
+      <NavLink to="/chat/singlechat" replace className={classNames(sc("link"))}>
         <Icon className={classNames(sc("icon"))} type="user" />
       </NavLink>
-      <NavLink to="/chat/group" replace className={classNames(sc("link"))}>
+      <NavLink to="/chat/groupchat" replace className={classNames(sc("link"))}>
         <Icon className={classNames(sc("icon"))} type="team" />
       </NavLink>
 

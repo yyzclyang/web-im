@@ -12,10 +12,10 @@ import { getFriendsListAction } from "@/store/action";
 
 const sc = scopedClassMaker("chat");
 
-export type ChatType = "single" | "group";
+export type ChatType = "singlechat" | "groupchat";
 
 const Chat: React.FC = () => {
-  const { chatType = "single", chatId } = useParams();
+  const { chatType = "singlechat", chatId } = useParams();
 
   const friendsList = useShallowEqualSelector(
     (store: StoreType) => store.friends
@@ -34,7 +34,12 @@ const Chat: React.FC = () => {
         chatId={chatId}
         friendList={friendsList}
       />
-      <ChatPanel active={false} />
+      <ChatPanel
+        chatId={chatId}
+        friendInfo={friendsList.find(
+          (friendInfo) => friendInfo.name === chatId
+        )}
+      />
     </div>
   );
 };
