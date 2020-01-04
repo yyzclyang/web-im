@@ -16,11 +16,14 @@ export type ChatType = "singlechat" | "groupchat";
 
 const Chat: React.FC = () => {
   const { chatType = "singlechat", chatId } = useParams();
+  const dispatch = useDispatch();
 
   const friendsList = useShallowEqualSelector(
     (store: StoreType) => store.friends
   ).filter((friendData) => friendData.subscription === "both");
-  const dispatch = useDispatch();
+  const messageList = useShallowEqualSelector(
+    (store: StoreType) => store.messages
+  );
 
   useEffect(() => {
     getFriendsListAction()(dispatch);
@@ -36,6 +39,7 @@ const Chat: React.FC = () => {
       />
       <ChatPanel
         chatId={chatId}
+        messageList={messageList[chatId!]}
         friendInfo={friendsList.find(
           (friendInfo) => friendInfo.name === chatId
         )}
