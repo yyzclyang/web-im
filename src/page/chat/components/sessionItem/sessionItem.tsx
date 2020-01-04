@@ -2,12 +2,12 @@ import React from "react";
 import { Avatar } from "antd";
 import { classNames, scopedClassMaker } from "@/utils";
 import "./sessionItem.scss";
-import { FriendData } from "@/config/WebIM";
+import { FriendInfo } from "@/config/WebIM";
 
 const sc = scopedClassMaker("session-item");
 
 interface SessionItemProps {
-  friendInfo: FriendData;
+  friendInfo: FriendInfo;
 }
 
 const SessionItem: React.FC<SessionItemProps> = (props: SessionItemProps) => {

@@ -1,7 +1,7 @@
-import { FriendData } from "@/config/WebIM";
+import { FriendInfo } from "@/config/WebIM";
 import { FriendsAction, FriendsActionTypeList } from "../action";
 
-type FriendsListType = Array<FriendData>;
+type FriendsListType = Array<FriendInfo>;
 
 const friendsListReducer = (
   state: FriendsListType = [],

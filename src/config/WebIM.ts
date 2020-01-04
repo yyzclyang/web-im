@@ -57,7 +57,7 @@ export interface SignInSuccessResult {
 }
 
 export type FriendSubscription = "both" | "to" | "from";
-export interface FriendData {
+export interface FriendInfo {
   name: string;
   subscription: FriendSubscription;
   jid: {
@@ -67,7 +67,7 @@ export interface FriendData {
     clientResource: string;
   };
 }
-export type FriendResult = Array<FriendData>;
+export type FriendResult = Array<FriendInfo>;
 export type PresenceMessageType = "subscribe" | "subscribed";
 export interface PresenceMessage<T> {
   type: T;
