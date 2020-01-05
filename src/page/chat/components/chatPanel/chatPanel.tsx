@@ -2,10 +2,11 @@ import React, { ChangeEventHandler, useState } from "react";
 import { Icon, Input } from "antd";
 import { useDispatch } from "react-redux";
 import { classNames, scopedClassMaker } from "@/utils";
-import { FriendInfo } from "@/config/WebIM";
+import { FriendInfo, TextMessage } from "@/config/WebIM";
+import { addMessage, sendMessageAction } from "@/store/action";
+import { Message } from "@/store/reducer/message";
+import store from "@/store";
 import "./chatPanel.scss";
-import { sendMessageAction } from "@/store/action";
-import { MessageType } from "@/store/reducer/message";
 
 const { TextArea } = Input;
 
@@ -14,7 +15,7 @@ const sc = scopedClassMaker("chat-panel");
 interface ChatPanelProps {
   chatId?: string;
   friendInfo?: FriendInfo;
-  messageList: Array<MessageType>;
+  messageList: Array<Message>;
 }
 
 const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
@@ -42,7 +43,7 @@ const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
           </div>
           <div className={classNames(sc("message-list"))}>
             {messageList.map((message) => (
-              <div key={message.time}>{message.message}</div>
+              <div key={message.time}>{message.data}</div>
             ))}
           </div>
           <div className={classNames(sc("input-area"))}>
@@ -65,4 +66,20 @@ const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
   );
 };
 
+const receiveTextMessage = (message: TextMessage) => {
+  store.dispatch(
+    addMessage({
+      type: message.type,
+      status: "fulfilled",
+      dialogue: message.from,
+      to: message.to,
+      from: message.from,
+      data: message.data,
+      time: message.time,
+      mid: message.id
+    })
+  );
+};
+
 export default ChatPanel;
+export { receiveTextMessage };

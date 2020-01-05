@@ -4,6 +4,7 @@ import {
   addFriendStatusMessage,
   friendRequest
 } from "@/page/chat/components/modal/addFriend";
+import { receiveTextMessage } from "@/page/chat/components/chatPanel";
 
 export interface SignUpData {
   username: string;
@@ -74,6 +75,21 @@ export interface PresenceMessage<T> {
   to: string;
   from: string;
   status: string;
+}
+
+export type MessageType = "chat";
+export interface TextMessage {
+  id: string;
+  type: MessageType;
+  from: string;
+  to: string;
+  data: string;
+  ext: { [key: string]: any };
+  sourceMsg: string;
+  time: string;
+  error: boolean;
+  errorText: string;
+  errorCode: number;
 }
 
 const WebIM = {
@@ -205,8 +221,9 @@ const WebIM = {
         //连接关闭回调
         console.log("onClosed", message);
       },
-      onTextMessage: (message: any) => {
+      onTextMessage: (message: TextMessage) => {
         //收到文本消息
+        receiveTextMessage(message);
         console.log("onTextMessage", message);
       },
       onEmojiMessage: (message: any) => {

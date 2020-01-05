@@ -1,21 +1,26 @@
 import { MessageAction, MessageActionTypeList } from "../action";
+import { MessageType } from "@/config/WebIM";
 
 type MessageStatus = "pending" | "fulfilled" | "rejected";
-interface MessageType {
+
+interface Message {
+  type?: MessageType;
   status: MessageStatus;
+  dialogue: string;
   to: string;
+  from?: string;
   id?: number;
   mid?: string;
   time: string;
-  message: string;
+  data: string;
 }
 interface ChangeStatusMessageType {
   status: MessageStatus;
-  to: string;
+  dialogue: string;
   id: number;
 }
 type MessageListType = {
-  [key: string]: Array<MessageType>;
+  [key: string]: Array<Message>;
 };
 
 const messageListReducer = (
@@ -24,14 +29,17 @@ const messageListReducer = (
 ) => {
   switch (action.type) {
     case "ADD_MESSAGE": {
-      const to = action.payload.state.to;
-      return { ...state, [to]: [...(state[to] ?? []), action.payload.state] };
-    }
-    case "CHANGE_MESSAGE_STATUS": {
-      const to = action.payload.state.to;
+      const dialogue = action.payload.state.dialogue;
       return {
         ...state,
-        [to]: (state[to] ?? []).map((message) => {
+        [dialogue]: [...(state[dialogue] ?? []), action.payload.state]
+      };
+    }
+    case "CHANGE_MESSAGE_STATUS": {
+      const dialogue = action.payload.state.dialogue;
+      return {
+        ...state,
+        [dialogue]: (state[dialogue] ?? []).map((message) => {
           if (message.id === action.payload.state.id) {
             return { ...message, status: action.payload.state.status };
           }
@@ -46,4 +54,4 @@ const messageListReducer = (
 };
 
 export default messageListReducer;
-export { MessageStatus, ChangeStatusMessageType, MessageType, MessageListType };
+export { MessageStatus, ChangeStatusMessageType, Message, MessageListType };

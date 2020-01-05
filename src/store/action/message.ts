@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 import { message as messageModal } from "antd";
 import WebIM from "@/config/WebIM";
-import { ChangeStatusMessageType, MessageType } from "../reducer/message";
+import { ChangeStatusMessageType, Message } from "../reducer/message";
 
 interface MessageActionTypeList {
-  ADD_MESSAGE: MessageType;
+  ADD_MESSAGE: Message;
   CHANGE_MESSAGE_STATUS: ChangeStatusMessageType;
 }
 interface MessageAction<K extends keyof MessageActionTypeList> {
@@ -14,7 +14,7 @@ interface MessageAction<K extends keyof MessageActionTypeList> {
   };
 }
 
-const addMessage = (message: MessageType) => {
+const addMessage = (message: Message): MessageAction<"ADD_MESSAGE"> => {
   return {
     type: "ADD_MESSAGE",
     payload: {
@@ -23,7 +23,9 @@ const addMessage = (message: MessageType) => {
   };
 };
 
-const changeMessageStatus = (changeStatusMessage: ChangeStatusMessageType) => {
+const changeMessageStatus = (
+  changeStatusMessage: ChangeStatusMessageType
+): MessageAction<"CHANGE_MESSAGE_STATUS"> => {
   return {
     type: "CHANGE_MESSAGE_STATUS",
     payload: {
@@ -37,9 +39,11 @@ const sendMessageAction = (to: string, message: string) => {
     const id = WebIM.conn.getUniqueId(); // 生成本地消息id
     dispatch(
       addMessage({
+        type: "chat",
+        dialogue: to,
         to,
         id,
-        message,
+        data: message,
         time: new Date().getTime().toString(),
         status: "pending"
       })
@@ -48,7 +52,7 @@ const sendMessageAction = (to: string, message: string) => {
       .then(() => {
         dispatch(
           changeMessageStatus({
-            to,
+            dialogue: to,
             id,
             status: "fulfilled"
           })
@@ -58,7 +62,7 @@ const sendMessageAction = (to: string, message: string) => {
         messageModal.error("消息发送失败!");
         dispatch(
           changeMessageStatus({
-            to,
+            dialogue: to,
             id,
             status: "rejected"
           })
