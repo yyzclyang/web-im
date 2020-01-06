@@ -7,6 +7,7 @@ import { addMessage, sendMessageAction } from "@/store/action";
 import { Message } from "@/store/reducer/message";
 import store from "@/store";
 import "./chatPanel.scss";
+import MessageBubble from "@/page/chat/components/messageBubble";
 
 const { TextArea } = Input;
 
@@ -43,7 +44,7 @@ const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
           </div>
           <div className={classNames(sc("message-list"))}>
             {messageList.map((message) => (
-              <div key={message.time}>{message.data}</div>
+              <MessageBubble key={message.time} message={message} />
             ))}
           </div>
           <div className={classNames(sc("input-area"))}>

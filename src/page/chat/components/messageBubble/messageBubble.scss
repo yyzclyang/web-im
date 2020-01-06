@@ -1,0 +1,47 @@
+@import "../../../../style/theme";
+
+.message-bubble {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+  &-text {
+    position: relative;
+    max-width: 60%;
+    margin: 0 8px;
+    padding: 8px;
+    border: {
+      radius: 4px;
+    }
+    white-space: normal;
+    flex-shrink: 1;
+    background: #b0e46e;
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 12px;
+      right: -4px;
+      transform: rotate(45deg);
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: #b0e46e;
+    }
+  }
+  &-avatar {
+    flex-shrink: 0;
+  }
+
+  &-other-side {
+    flex-direction: row-reverse;
+    .message-bubble-text {
+      background: #ffffff;
+
+      &::after {
+        left: -4px;
+        background: #ffffff;
+      }
+    }
+  }
+}
