@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from "react";
+import React, { ChangeEventHandler, useState, useRef, useEffect } from "react";
 import { Icon, Input } from "antd";
 import { useDispatch } from "react-redux";
 import { classNames, scopedClassMaker } from "@/utils";
@@ -23,6 +23,13 @@ const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
   const { chatId, friendInfo, messageList } = props;
   const dispatch = useDispatch();
 
+  const messageListEl = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (messageListEl.current) {
+      messageListEl.current.scrollTop =
+        messageListEl.current?.scrollHeight ?? 0;
+    }
+  }, [messageList]);
   const [value, setValue] = useState<string>("");
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setValue(e.currentTarget.value);
@@ -42,7 +49,7 @@ const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
           <div className={classNames(sc("title"))}>
             <span className={classNames(sc("name"))}>{friendInfo?.name}</span>
           </div>
-          <div className={classNames(sc("message-list"))}>
+          <div ref={messageListEl} className={classNames(sc("message-list"))}>
             {messageList.map((message) => (
               <MessageBubble key={message.time} message={message} />
             ))}
