@@ -1,6 +1,7 @@
 @import "../../../../style/theme";
 
 .chat-slide-bar {
+  flex-shrink: 0;
   width: 80px;
   height: 100%;
   background: #504e4f;
