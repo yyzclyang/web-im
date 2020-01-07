@@ -20,10 +20,13 @@
       color: $theme-color;
     }
   }
+  &-icon-wrapper {
+    display: inline-block;
+    margin-top: 32px;
+  }
   &-icon {
     font-size: 30px;
     color: #bdbdbd;
-    margin-top: 32px;
     &-placeholder {
       flex-grow: 1;
     }

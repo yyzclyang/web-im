@@ -1,10 +1,15 @@
 import { Dispatch } from "redux";
 import { message as messageModal } from "antd";
 import WebIM from "@/config/WebIM";
-import { ChangeStatusMessageType, Message } from "../reducer/message";
+import {
+  ChangeStatusMessageType,
+  Message,
+  SetNewMessageCount
+} from "../reducer/message";
 
 interface MessageActionTypeList {
   ADD_MESSAGE: Message;
+  SET_NEW_MESSAGE_COUNT: SetNewMessageCount;
   CHANGE_MESSAGE_STATUS: ChangeStatusMessageType;
 }
 interface MessageAction<K extends keyof MessageActionTypeList> {
@@ -34,6 +39,21 @@ const changeMessageStatus = (
   };
 };
 
+const setNewMessageCount = (
+  dialogue: string,
+  count: number
+): MessageAction<"SET_NEW_MESSAGE_COUNT"> => {
+  return {
+    type: "SET_NEW_MESSAGE_COUNT",
+    payload: {
+      state: {
+        dialogue,
+        count
+      }
+    }
+  };
+};
+
 const sendMessageAction = (to: string, message: string) => {
   return (dispatch: Dispatch) => {
     const id = WebIM.conn.getUniqueId(); // 生成本地消息id
@@ -45,7 +65,8 @@ const sendMessageAction = (to: string, message: string) => {
         id,
         data: message,
         time: new Date().getTime().toString(),
-        status: "pending"
+        status: "pending",
+        isSend: true
       })
     );
     return WebIM.sendSingleMessage(id, to, message)
@@ -71,4 +92,10 @@ const sendMessageAction = (to: string, message: string) => {
   };
 };
 
-export { MessageActionTypeList, MessageAction, addMessage, sendMessageAction };
+export {
+  MessageActionTypeList,
+  MessageAction,
+  addMessage,
+  setNewMessageCount,
+  sendMessageAction
+};

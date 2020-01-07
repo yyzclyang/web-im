@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Avatar, Icon, Dropdown } from "antd";
+import { Avatar, Icon, Dropdown, Badge } from "antd";
 import { ClickParam } from "antd/lib/menu";
 import { classNames, scopedClassMaker } from "@/utils";
 import PopMenu from "../popMenu";
@@ -29,7 +29,14 @@ interface SettingMenuItem {
   title: string;
 }
 
-const SlideBar: React.FC = () => {
+interface SlideBarProps {
+  singleNewMessageCount: number;
+  groupNewMessageCount: number;
+}
+
+const SlideBar: React.FC<SlideBarProps> = (props: SlideBarProps) => {
+  const { singleNewMessageCount, groupNewMessageCount } = props;
+
   const modalType: Array<ModalType> = [
     "add-friend",
     "join-group",
@@ -80,10 +87,18 @@ const SlideBar: React.FC = () => {
         shape="square"
       />
       <NavLink to="/chat/singlechat" replace className={classNames(sc("link"))}>
-        <Icon className={classNames(sc("icon"))} type="user" />
+        <span className={classNames(sc("icon-wrapper"))}>
+          <Badge count={singleNewMessageCount}>
+            <Icon className={classNames(sc("icon"))} type="user" />
+          </Badge>
+        </span>
       </NavLink>
       <NavLink to="/chat/groupchat" replace className={classNames(sc("link"))}>
-        <Icon className={classNames(sc("icon"))} type="team" />
+        <span className={classNames(sc("icon-wrapper"))}>
+          <Badge count={groupNewMessageCount}>
+            <Icon className={classNames(sc("icon"))} type="team" />
+          </Badge>
+        </span>
       </NavLink>
 
       <div className={sc("icon-placeholder")} />
@@ -94,9 +109,13 @@ const SlideBar: React.FC = () => {
         placement="topLeft"
         trigger={["click"]}
       >
-        <Icon className={classNames(sc("icon"))} type="plus-circle" />
+        <span className={classNames(sc("icon-wrapper"))}>
+          <Icon className={classNames(sc("icon"))} type="plus-circle" />
+        </span>
       </Dropdown>
-      <Icon className={classNames(sc("icon"))} type="setting" />
+      <span className={classNames(sc("icon-wrapper"))}>
+        <Icon className={classNames(sc("icon"))} type="setting" />
+      </span>
       {modalType.map((type) =>
         modalGenerator({
           type,

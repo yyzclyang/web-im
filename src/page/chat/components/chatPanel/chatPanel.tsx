@@ -3,7 +3,11 @@ import { Icon, Input } from "antd";
 import { useDispatch } from "react-redux";
 import { classNames, scopedClassMaker } from "@/utils";
 import { FriendInfo, TextMessage } from "@/config/WebIM";
-import { addMessage, sendMessageAction } from "@/store/action";
+import {
+  addMessage,
+  sendMessageAction,
+  setNewMessageCount
+} from "@/store/action";
 import { Message } from "@/store/reducer/message";
 import store from "@/store";
 import "./chatPanel.scss";

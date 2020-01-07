@@ -31,7 +31,17 @@ const Chat: React.FC = () => {
 
   return (
     <div className={classNames(sc("page"))}>
-      <SlideBar />
+      <SlideBar
+        singleNewMessageCount={(() => {
+          return Object.keys(messageList).reduce((count, id) => {
+            const messageData = messageList[id]?.messageData;
+            return (messageData ? messageData[0]?.type : "") === "chat"
+              ? messageList[id].newMessageCount + count
+              : count;
+          }, 0);
+        })()}
+        groupNewMessageCount={0}
+      />
       <SessionList
         chatType={chatType as ChatType}
         chatId={chatId}
@@ -41,7 +51,7 @@ const Chat: React.FC = () => {
       <ChatPanel
         chatType={chatType as ChatType}
         chatId={chatId}
-        messageList={messageList[chatId!] ?? []}
+        messageList={messageList[chatId!]?.messageData ?? []}
         friendInfo={friendsList.find(
           (friendInfo) => friendInfo.name === chatId
         )}
