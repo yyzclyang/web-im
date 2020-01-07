@@ -8,19 +8,21 @@ import { Message } from "@/store/reducer/message";
 import store from "@/store";
 import "./chatPanel.scss";
 import MessageBubble from "@/page/chat/components/messageBubble";
+import { ChatType } from "@/page/chat";
 
 const { TextArea } = Input;
 
 const sc = scopedClassMaker("chat-panel");
 
 interface ChatPanelProps {
+  chatType: ChatType;
   chatId?: string;
   friendInfo?: FriendInfo;
   messageList: Array<Message>;
 }
 
 const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
-  const { chatId, friendInfo, messageList } = props;
+  const { chatType, chatId, friendInfo, messageList } = props;
   const dispatch = useDispatch();
 
   const messageListEl = useRef<HTMLDivElement>(null);
@@ -51,7 +53,11 @@ const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
           </div>
           <div ref={messageListEl} className={classNames(sc("message-list"))}>
             {messageList.map((message) => (
-              <MessageBubble key={message.time} message={message} />
+              <MessageBubble
+                chatType={chatType}
+                key={message.time}
+                message={message}
+              />
             ))}
           </div>
           <div className={classNames(sc("input-area"))}>

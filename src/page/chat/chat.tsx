@@ -38,6 +38,7 @@ const Chat: React.FC = () => {
         friendList={friendsList}
       />
       <ChatPanel
+        chatType={chatType as ChatType}
         chatId={chatId}
         messageList={messageList[chatId!] ?? []}
         friendInfo={friendsList.find(
