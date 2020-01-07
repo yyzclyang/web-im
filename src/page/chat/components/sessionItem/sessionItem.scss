@@ -9,13 +9,21 @@
   padding-right: 16px;
   border-bottom: 1px solid #f2f2f2;
 
+  &-info {
+    display: flex;
+    flex-direction: column;
+  }
   &-name {
     margin-left: 8px;
-    color: #595959;
+    color: #000000;
     font: {
       size: 16px;
       weight: 500;
     }
+  }
+  &-message {
+    margin-left: 8px;
+    color: #898989;
   }
   &:hover {
     .session-item-name {

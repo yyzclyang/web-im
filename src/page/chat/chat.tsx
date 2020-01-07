@@ -36,6 +36,7 @@ const Chat: React.FC = () => {
         chatType={chatType as ChatType}
         chatId={chatId}
         friendList={friendsList}
+        messageList={messageList}
       />
       <ChatPanel
         chatType={chatType as ChatType}
