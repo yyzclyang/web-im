@@ -5,9 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const isDev = () => process.env.NODE_ENV !== "production";
 
 module.exports = {
-  entry: {
-    index: "./src/index.tsx"
-  },
+  entry: ["react-hot-loader/patch", "./src/index.tsx"],
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "static/js/[name].[hash].js",
@@ -17,6 +15,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
+      "react-dom": "@hot-loader/react-dom",
       "@": path.resolve(__dirname, "src")
     }
   },

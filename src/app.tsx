@@ -1,4 +1,5 @@
 import React from "react";
+import { hot } from "react-hot-loader/root";
 import { Route, useLocation, useHistory } from "react-router-dom";
 import { classNames, scopedClassMaker, tokenUtil } from "@/utils";
 import { SignIn, SignUp } from "./page/sign";
@@ -26,4 +27,4 @@ const App: React.FunctionComponent = ({}) => {
   );
 };
 
-export default App;
+export default hot(App);
