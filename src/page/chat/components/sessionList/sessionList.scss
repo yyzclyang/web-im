@@ -8,6 +8,7 @@
   ul {
     list-style: none;
     padding-left: 0;
+    overflow: auto;
     .session-list-link.active {
       .session-item-name {
         color: $theme-color;

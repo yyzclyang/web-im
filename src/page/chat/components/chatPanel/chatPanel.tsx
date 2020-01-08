@@ -35,7 +35,7 @@ const ChatPanel: React.FC<ChatPanelProps> = (props: ChatPanelProps) => {
       messageListEl.current.scrollTop =
         messageListEl.current?.scrollHeight ?? 0;
     }
-  }, [messageList]);
+  }, [messageList.length]);
   const [value, setValue] = useState<string>("");
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setValue(e.currentTarget.value);

@@ -34,8 +34,7 @@ const Chat: React.FC = () => {
       <SlideBar
         singleNewMessageCount={(() => {
           return Object.keys(messageList).reduce((count, id) => {
-            const messageData = messageList[id]?.messageData;
-            return (messageData ? messageData[0]?.type : "") === "chat"
+            return messageList[id]?.messageData?.[0].type === "chat"
               ? messageList[id].newMessageCount + count
               : count;
           }, 0);
